@@ -1,0 +1,36 @@
+import React, { useState, useEffect } from 'react';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+
+import useStyles from './Header.styles';
+  
+const Header = (props) => {
+    console.log('props', props);
+    const classes = useStyles();
+    const [logged, setLogged] = useState(false);
+
+    useEffect(() => {
+        setLogged(true);
+    }, []);
+
+    return (
+        <AppBar position="static">
+            <Toolbar>
+            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" className={classes.title}>
+                Bate o Martelo!
+            </Typography>
+            {!logged && <Button color="inherit">Login</Button>}
+            </Toolbar>
+        </AppBar>
+    );
+};
+
+export default Header;
+
