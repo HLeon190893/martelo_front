@@ -13,9 +13,9 @@ const Header = (props) => {
     const classes = useStyles();
     const [logged, setLogged] = useState(false);
 
-    useEffect(() => {
-        setLogged(true);
-    }, []);
+    // useEffect(() => {
+    //     setLogged(true);
+    // }, []);
 
     return (
         <AppBar position="static">
