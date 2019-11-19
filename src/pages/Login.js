@@ -56,9 +56,8 @@ export default function SignIn() {
   const classes = useStyles();
 
   return (
-    //   <div>
-    //     <Header />
-    //   </div>
+      <div>
+        <Header />
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -93,7 +92,7 @@ export default function SignIn() {
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
+            label="Lembrar E-mail"
           />
           <Button
             type="submit"
@@ -106,12 +105,12 @@ export default function SignIn() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link href="/Forgot" variant="body2">
                 Esqueceu sua senha?
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/SignUp" variant="body2">
                 {"Não tem uma conta? Cadastre-se!"}
               </Link>
             </Grid>
@@ -119,8 +118,10 @@ export default function SignIn() {
         </form>
       </div>
       <Box mt={8}>
-        <Copyright />
+        {/* <Copyright /> */}
       </Box>
     </Container>
+    </div>
+
   );
 }

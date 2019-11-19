@@ -4,6 +4,10 @@ import React, { Suspense, lazy } from 'react';
 const Home = lazy(() => import('./pages/Home'));
 const Login = lazy(() => import('./pages/Login'));
 const Signup = lazy(() => import('./pages/SignUp'))
+const Auction = lazy(() => import('./pages/Auction'))
+const RegAuction = lazy(() => import('./pages/RegAuction'))
+const UserInfo = lazy(() => import('./pages/UserInfo'))
+
 
 const App = () => (
   <Router>
@@ -13,6 +17,11 @@ const App = () => (
         {/* <Route exact path="/foo/:id" component={Home}/> */}
         <Route path="/login" component={Login}/>
         <Route path="/signup" component={Signup}/>
+        <Route path='/auction/:id' component={Auction}/>
+        <Route path='/regauction' component={RegAuction}/>
+        <Route path='/userinfo' component={UserInfo}/>
+        
+
       </Switch>
     </Suspense>
   </Router>

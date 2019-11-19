@@ -12,6 +12,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Header from '../components/Header'
+import { jsxFragment } from '@babel/types';
+
 
 function Copyright() {
 return (
@@ -33,7 +36,7 @@ body: {
 },
 },
 paper: {
-marginTop: theme.spacing(8),
+marginTop: theme.spacing(12),
 display: 'flex',
 flexDirection: 'column',
 alignItems: 'center',
@@ -49,18 +52,25 @@ marginTop: theme.spacing(3),
 submit: {
 margin: theme.spacing(3, 0, 2),
 },
+text: {
+  marginTop: theme.spacing(1),
+},
 }));
 
 export default function SignUp() {
 const classes = useStyles();
 
 return (
-<Container component="main" maxWidth="xs">
+  <div>
+  <Header />
+  
+ <Container component="main" maxWidth="xs">
   <CssBaseline />
   <div className={classes.paper}>
-    <Avatar className={classes.avatar}>
-      <LockOutlinedIcon />
-    </Avatar>
+
+    {/* <Avatar className={classes.avatar}> */}
+      {/* <LockOutlinedIcon /> */}
+    {/* </Avatar> */}
     <Typography component="h1" variant="h5">
       Cadastro de Usuário
     </Typography>
@@ -75,6 +85,7 @@ return (
             id="Nome"
             label="Nome"
             autoFocus
+            className={classes.text}
           />
         </Grid>
         <Grid item xs={12}>
@@ -86,6 +97,7 @@ return (
             label="CPF"
             name="cpf"
             autoComplete="cpf"
+            className={classes.text}
           />
         </Grid>
         <Grid item xs={12}>
@@ -97,6 +109,20 @@ return (
             label="E-mail"
             name="email"
             autoComplete="email"
+            className={classes.text}
+          />
+        </Grid>
+        
+        <Grid item xs={12}>
+          <TextField
+            variant="outlined"
+            required
+            fullWidth
+            id="cep"
+            label="CEP"
+            name="cep"
+            autoComplete="cep"
+            className={classes.text}
           />
         </Grid>
         
@@ -112,7 +138,7 @@ return (
       </Button>
       <Grid container justify="flex-end">
         <Grid item>
-          <Link href="/src/App.js" variant="body2">
+          <Link href="/login" variant="body2">
             Já tem cadastro? Logue agora!
           </Link>
         </Grid>
@@ -120,6 +146,7 @@ return (
     </form>
   </div>
 </Container>
+</div>
 );
 }
 
