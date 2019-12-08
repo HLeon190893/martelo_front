@@ -1,70 +1,56 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useState, useEffect } from 'react';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
-import tileData from './tileData';
+import useStyles from './Gridlist.styles'
+import { ListSubheader } from '@material-ui/core';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
-    backgroundColor: theme.palette.background.paper,
-  },
-  gridList: {
-    width: 800,
-    height: 800,
-  },
-  icon: {
-    color: 'rgba(255, 255, 255, 0.54)',
-  },
-}));
+const AuctionGridList = () => {
+  const [auctions, setAuctions] = useState([]);
 
-/**
- * The example data is structured as follows:
- *
- * import image from 'path/to/image.jpg';
- * [etc...]
- *
- * const tileData = [
- *   {
- *     img: image,
- *     title: 'Image',
- *     author: 'author',
- *   },
- *   {
- *     [etc...]
- *   },
- * ];
- */
-export default function TitlebarGridList() {
+    async function fetchData(){
+      const res = await fetch("http://localhost:3001/auction");
+      res
+      .json()
+      .then(res => setAuctions(res))
+      .catch(err => console.warn(err.message))
+      }
+
+    useEffect(() => {
+      fetchData();
+  },[]);
+  
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <GridList cellHeight={180} className={classes.gridList}>
+      <GridList cellHeight={300} className={classes.gridList}>
         <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-          {/* <ListSubheader component="div">December</ListSubheader> */}
+          <ListSubheader component="div"></ListSubheader>
         </GridListTile>
-        {tileData.map(tile => (
-          <GridListTile key={tile.img}>
-            <img src={tile.img} alt={tile.title} />
+        {auctions.map(auction => (
+          <GridListTile key={auction.image}>
+            <img src={auction.image} alt={auction.name} />
             <GridListTileBar
-              title={tile.title}
-              subtitle={<span>R${tile.value}</span>}
+              title={auction.name}
+              subtitle={<span>R${auction.value}</span>}
               actionIcon={
-                <IconButton className={classes.icon} src='/Auction/1'>
+                <IconButton className={classes.icon} src='/Auction/${auction.id}'>
                   <AttachMoneyIcon />
                 </IconButton>
               }
             />
           </GridListTile>
         ))}
+        )}
       </GridList>
     </div>
-  );
-}
+    );
+
+};
+
+export default AuctionGridList;
+
+  

@@ -6,6 +6,8 @@ const Login = lazy(() => import('./pages/Login'));
 const Signup = lazy(() => import('./pages/SignUp'))
 const Auction = lazy(() => import('./pages/Auction'))
 const UserInfo = lazy(() => import('./pages/UserInfo'))
+const RegAuction = lazy(() => import('./pages/RegAuction'))
+const Transaction = lazy (() => import('./pages/Transactions'))
 
 
 const App = () => (
@@ -18,6 +20,8 @@ const App = () => (
         <Route path="/signup" component={Signup}/>
         <Route path='/auction/:id' component={Auction}/>
         <Route path='/userinfo' component={UserInfo}/>
+        <Route path='/regauction' component={RegAuction}/>
+        <Route path='/transactions' component={Transaction}/>
         
       </Switch>
     </Suspense>

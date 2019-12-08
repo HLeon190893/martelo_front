@@ -1,16 +1,13 @@
-import React from "react";
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useState, useEffect } from "react";
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
-
-function rand() {
-    return Math.round(Math.random() * 20) - 10;
-}
+import useStyles from './DarLance.styles'
+import Axios from "axios";
 
 function getModalStyle() {
-    const top = 50 + rand();
-    const left = 50 + rand();
+    const top = 50;
+    const left = 50;
     return {
         top: `${top}%`,
         left: `${left}%`,
@@ -18,42 +15,12 @@ function getModalStyle() {
     };
 }
 
-const useStyles = makeStyles(theme => ({
-    modal: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    paper: {
-        position: 'absolute',
-        width: 450,
-        height: 200,
-        backgroundColor: theme.palette.background.paper,
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
-    },
-    submit: {
-        width: 250,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginLeft: '20%'
-    },
-    modalButtons: {
-        marginTop: theme.spacing(2),
-        marginLeft: theme.spacing(8),
-    },
-    submit2: {
-        width: 150,
-        margin: theme.spacing(1)
-      
-    },
-}));
-
 export default function SimpleModal() {
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
     const [open, setOpen] = React.useState(false);
-
+    const [value, setValue] = React.useState('');
+    
     const handleOpen = () => {
         setOpen(true);
     };
@@ -61,6 +28,23 @@ export default function SimpleModal() {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const changeHandler = (e) => {
+        setValue({ [e.target.name]: e.target.value })
+    };
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+        Axios.put('http://localhost:3001/auction/5dec53efccda890174449c72', value)
+        .then(response => {
+            console.log('Sucesso');
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    }
+
+    
 
     return (
         <div>
@@ -76,21 +60,26 @@ export default function SimpleModal() {
             >
                 <div style={modalStyle} className={classes.paper}>
                     <h2>Faça o seu Lance!</h2>
-                    <TextField
-                        required
-                        id="outlined-disabled"
-                        label="Valor do Lance"
-                        className={classes.textField}
-                    />
-                    <div className={classes.modalButtons}>
-                        <Button variant="contained" color="primary" onClick={handleClose} className={classes.submit2}>
-                            Cancelar
+                    <form onSubmit={submitHandler}>
+                        <TextField
+                            required
+                            id="outlined-disabled"
+                            label="Valor do Lance"
+                            className={classes.textField}
+                            name="value"
+                            autoFocus
+                            // value={value}
+                            onChange={changeHandler}
+                        />
+                        <div className={classes.modalButtons}>
+                            <Button variant="contained" color="primary" onClick={handleClose} className={classes.submit2}>
+                                Cancelar
                         </Button>
-                        <Button variant="contained" color="primary" className={classes.submit2}>
-                            Confirmar
+                            <Button variant="contained" color="primary" className={classes.submit2} type="submit">
+                                Confirmar
                         </Button>
-
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </Modal>
         </div>
