@@ -1,25 +1,17 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles(theme => ({
-    // root: {
-    //   width: '100%',
-    // },
-    // paper: {
-    //   width: '100%',
-    //   overflowX: 'auto',
-    // },
-    // table: {
-    //   minWidth: 650,
-    // },
+   
     root: {
-      width: '100%',
+      // width: '100%',
+      padding: theme.spacing(2),
     },
     paper: {
       width: '100%',
       marginBottom: theme.spacing(2),
     },
     table: {
-      minWidth: 750,
+      minWidth: '100%',
     },
     tableWrapper: {
       overflowX: 'auto',
@@ -35,4 +27,8 @@ export default makeStyles(theme => ({
       top: 20,
       width: 1,
     },
+    title: {
+      marginBottom: theme.spacing(2),
+      marginTop: theme.spacing(1),
+    }
   }));

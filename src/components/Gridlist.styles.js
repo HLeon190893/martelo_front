@@ -5,15 +5,21 @@ export default makeStyles(theme => ({
           display: 'flex',
           flexWrap: 'wrap',
           justifyContent: 'space-around',
-          overflow: 'hidden',
+          // overflow: 'hidden',
           backgroundColor: theme.palette.background.paper,
           marginTop: '25px'
         },
         gridList: {
           width: 800,
-          height: 550,
+          // height: 550,
         },
         icon: {
           color: 'rgba(255, 255, 255, 0.54)',
+          '& svg': {
+           color: '#fff',
+           border: '1px solid #fff',
+           borderRadius: '30px',
+           padding: '5px',
+          }
         },
       }));

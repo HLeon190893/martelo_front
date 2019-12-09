@@ -4,6 +4,8 @@ import TextField from '@material-ui/core/TextField';
 import DarLance from '../components/DarLance'
 import ArrematarLeilao from '../components/ArrematarLeilao'
 import { TextareaAutosize } from "@material-ui/core";
+import { format } from 'date-fns' 
+import {formatFare} from '../helper'
 
 const AuctionBid = ({ auctionId }) => {
     const [auctions, setAuctions] = useState({});
@@ -12,7 +14,10 @@ const AuctionBid = ({ auctionId }) => {
         const res = await fetch(`http://localhost:3001/auction/${auctionId}`)
         res
             .json()
-            .then(res => setAuctions(res))
+            .then(res => {
+                setAuctions(res)
+                console.log(res);
+            })
             .catch(err => console.warn(err.message))
     }
 
@@ -31,7 +36,7 @@ const AuctionBid = ({ auctionId }) => {
             </div>
             {/* {auctions.map(auction => ( */}
             <div className={classes.container}>
-                Nome
+                {/* Nome
             <TextField
                     disabled
                     id="outlined-disabled"
@@ -44,7 +49,7 @@ const AuctionBid = ({ auctionId }) => {
                     disabled
                     id="outlined-disabled"
                     className={classes.textField}
-                    value={auctions.finalDate}
+                    value={auctions.finalDate && format(new Date(auctions.finalDate),'dd/MM/yyyy kk:mm')}
                 />
                 <br />
                 Valor do Lance Atual (R$)
@@ -62,15 +67,30 @@ const AuctionBid = ({ auctionId }) => {
                     className={classes.textField}
                     value={auctions.capValue}
                 />
-                <br />
-                Descrição do Produto
-            <TextareaAutosize
+                <br /> */}
+                
+            {/* <TextareaAutosize
                     disabled name="description"
                     id="outlined-disabled"
                     className={classes.textArea}
                     value={auctions.description}
-                />
+                /> */}
+            <dl>
+                <dt className={classes.infoTitle}>Nome</dt>
+                <dd className={classes.infoDescription}>{auctions.name}</dd>
 
+                <dt className={classes.infoTitle}>Data de Encerramento</dt>
+                <dd className={classes.infoDescription}>{auctions.finalDate && format(new Date(auctions.finalDate),'dd/MM/yyyy kk:mm')}</dd>
+                
+                <dt className={classes.infoTitle}>Valor do Lance Atual</dt>
+                <dd className={classes.infoDescription}>{formatFare(auctions.value)}</dd>
+                
+                <dt className={classes.infoTitle}>Valor de Arremate</dt>
+                <dd className={classes.infoDescription}>{formatFare(auctions.capValue)}</dd>
+
+                <dt className={classes.infoTitle}>Descrição do Produto</dt>
+                <dd className={classes.infoDescription}>{auctions.description}</dd>
+            </dl>
 
                 <div className={classes.bid}>
                     <DarLance auctionId={auctions._id} auctionName={auctions.name}/>

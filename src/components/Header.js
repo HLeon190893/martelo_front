@@ -47,8 +47,8 @@ const Header = (props) => {
                         Bate o Martelo!
                     </Link>
                 </Typography>
-                <Button color="inherit" href="/Login">
-                    Login
+                <Button color="inherit" href="/">
+                    Olá, Hugo!
             </Button>
             </Toolbar>
         </AppBar >

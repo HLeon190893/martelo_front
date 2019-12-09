@@ -53,6 +53,15 @@ export default makeStyles(theme => ({
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
       },
+    infoTitle: {
+    },
+    infoDescription: {
+        margin: 0,
+        fontSize: '.9em',
+        color: '#666',
+        borderBottom: '1px dotted #666',
+        marginBottom: '16px',
+    },
     textArea: {
         resize: 'vertical'
     },

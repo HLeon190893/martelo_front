@@ -7,6 +7,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import useStyles from './TransactionList.styles'
 import { Typography } from '@material-ui/core';
+import { format } from 'date-fns'
+import {formatFare} from '../helper'
 
 const TransactionList = () => {
     const [transactions, setTransactions] = useState([]);
@@ -18,6 +20,8 @@ const TransactionList = () => {
             .then(res => setTransactions(res))
             .catch(err => console.warn(err.message))
     }
+
+
 
     useEffect(() => {
         fetchData();
@@ -31,7 +35,7 @@ const TransactionList = () => {
 
         <div className={classes.root}>
             
-            <Typography variant="h4" component="h2" alingn="right">
+            <Typography variant="h4" component="h2" align="center" className={classes.title}>
                 Tabela de Transações
             </Typography>
 
@@ -53,8 +57,8 @@ const TransactionList = () => {
                                     {transaction.auctionId}
                                 </TableCell>
                                 <TableCell align="right">{transaction.auctionName}</TableCell>
-                                <TableCell align="right">{transaction.vlClose}</TableCell>
-                                <TableCell align="right">{transaction.dtExecution}</TableCell>
+                                <TableCell align="right">{formatFare(transaction.vlClose)}</TableCell>
+                                <TableCell align="right">{transaction.dtExecution && format(new Date(transaction.dtExecution),'dd/MM/yyyy kk:mm')}</TableCell>
                                 {/* <TableCell align="right">{row.protein}</TableCell> */}
                             </TableRow>
                         ))}
