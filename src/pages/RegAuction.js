@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Header from '../components/Header'
 import FormAuction from '../components/FormAuction'
+import FormAuctionF from '../components/FormAuctionF'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,6 +23,7 @@ export default function ButtonAppBar() {
     <div className={classes.root}>
       <Header />
       <FormAuction />
+      {/* <FormAuctionF /> */}
 
     </div>
   );

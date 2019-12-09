@@ -5,11 +5,11 @@ import DarLance from '../components/DarLance'
 import ArrematarLeilao from '../components/ArrematarLeilao'
 import { TextareaAutosize } from "@material-ui/core";
 
-const AuctionBid = () => {
+const AuctionBid = ({ auctionId }) => {
     const [auctions, setAuctions] = useState({});
 
     async function fetchData() {
-        const res = await fetch('http://localhost:3001/auction/5dec53efccda890174449c72')
+        const res = await fetch(`http://localhost:3001/auction/${auctionId}`)
         res
             .json()
             .then(res => setAuctions(res))
@@ -73,12 +73,13 @@ const AuctionBid = () => {
 
 
                 <div className={classes.bid}>
-                    <DarLance />
+                    <DarLance auctionId={auctions._id} auctionName={auctions.name}/>
                     <br />
-                    <ArrematarLeilao />
+                    <ArrematarLeilao auctionId={auctions._id} auctionName={auctions.name} value={auctions.capValue} />
                 </div>
             </div>
             {/* ))}; */}
+            {/* {JSON.stringify(auctions)} */}
         </div>
     );
 

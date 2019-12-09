@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
 import useStyles from './DarLance.styles'
+import { useSnackbar } from 'notistack';
 import Axios from "axios";
 
 function getModalStyle() {
@@ -15,12 +16,18 @@ function getModalStyle() {
     };
 }
 
-export default function SimpleModal() {
+const SimpleModal = (props) => {
+    const { enqueueSnackbar } = useSnackbar();
+
+    console.log(props)
+    console.log(props.auctionId);
+    console.log(props.auctionName);
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState('');
-    
+    const [error, setError] = React.useState('');
+
     const handleOpen = () => {
         setOpen(true);
     };
@@ -33,18 +40,38 @@ export default function SimpleModal() {
         setValue({ [e.target.name]: e.target.value })
     };
 
-    const submitHandler = (e) => {
+    const auctionId = props.auctionId;
+    const auctionName = props.auctionName;
+    const vlClose = value.value;
+
+    const submitHandler = async (e) => {
         e.preventDefault();
-        Axios.put('http://localhost:3001/auction/5dec53efccda890174449c72', value)
-        .then(response => {
-            console.log('Sucesso');
-        })
-        .catch(error => {
-            console.log(error);
-        })
+        try {
+            const upp = await Axios.put(`http://localhost:3001/auction/${auctionId}`, value)
+            if (upp.status == 200) {
+                enqueueSnackbar('Lance Realizado com Sucesso!', { variant: "success" })
+                try {
+                    const outraCoisa = await Axios.post('http://localhost:3001/transaction', { auctionId, auctionName, vlClose })
+                    if (outraCoisa.status == 200) {
+                        console.log('teste');
+                        window.location.href = `/auction/${auctionId}`;
+                    }
+                } catch (err) {
+                    console.log('werr1', err)
+                }
+            }
+            
+
+        } catch (error) {
+            enqueueSnackbar(error.response.data.error, { variant: "error" })
+            // console.log('tre', error.toJSON());
+            console.log('tre', error.response.data);
+        }
+
+
     }
 
-    
+
 
     return (
         <div>
@@ -72,7 +99,7 @@ export default function SimpleModal() {
                             onChange={changeHandler}
                         />
                         <div className={classes.modalButtons}>
-                            <Button variant="contained" color="primary" onClick={handleClose} className={classes.submit2}>
+                            <Button variant="contained" color="secondary" onClick={handleClose} className={classes.submit2}>
                                 Cancelar
                         </Button>
                             <Button variant="contained" color="primary" className={classes.submit2} type="submit">
@@ -85,3 +112,5 @@ export default function SimpleModal() {
         </div>
     );
 }
+
+export default SimpleModal

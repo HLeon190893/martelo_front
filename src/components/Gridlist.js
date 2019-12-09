@@ -5,7 +5,8 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import useStyles from './Gridlist.styles'
-import { ListSubheader } from '@material-ui/core';
+import { ListSubheader, Link } from '@material-ui/core';
+import { Link as LinkRoute } from 'react-router-dom';
 
 const AuctionGridList = () => {
   const [auctions, setAuctions] = useState([]);
@@ -23,7 +24,7 @@ const AuctionGridList = () => {
   },[]);
   
   const classes = useStyles();
-
+  
   return (
     <div className={classes.root}>
       <GridList cellHeight={300} className={classes.gridList}>
@@ -37,8 +38,8 @@ const AuctionGridList = () => {
               title={auction.name}
               subtitle={<span>R${auction.value}</span>}
               actionIcon={
-                <IconButton className={classes.icon} src='/Auction/${auction.id}'>
-                  <AttachMoneyIcon />
+                <IconButton className={classes.icon}>
+                  <LinkRoute component={Link} to={`/auction/${auction._id}`} color='textPrimary'><AttachMoneyIcon /></LinkRoute>
                 </IconButton>
               }
             />

@@ -148,7 +148,7 @@ class FormCadastro extends React.Component {
 
                         </Grid>
                         <Grid item>
-                            <Link href="/SignIn" variant="body2">
+                            <Link href="/Login" variant="body2">
                                 {"Já é cadastrado? Faço seu Login!"}
                             </Link>
                         </Grid>

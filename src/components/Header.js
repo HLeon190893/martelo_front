@@ -10,47 +10,48 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import useStyles from './Header.styles';
-  
+
 const Header = (props) => {
-    console.log('props', props);
     const classes = useStyles();
-    const [logged, setLogged] = useState(false);
+
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClick = event => {
-      setAnchorEl(event.currentTarget);
+        setAnchorEl(event.currentTarget);
     };
-  
+
     const handleClose = () => {
-      setAnchorEl(null);
+        setAnchorEl(null);
     };
-
-
-    // useEffect(() => {
-    //     setLogged(true);
-    // }, []);
 
     return (
         <AppBar position="static">
             <Toolbar>
-            <IconButton color="inherit" aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                <MenuIcon />
-                <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-                <MenuItem onClick={handleClose}>Meu Perfil</MenuItem>
-                <MenuItem onClick={handleClose}>Cadastrar Leilão</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
-                </Menu>
-            </IconButton>
-            <Typography variant="h6" className={classes.title}>
-                <Link href="/" className={classes.link} color='inherit'>
-                    Bate o Martelo!
-                </Link>
-            </Typography>
-            {!logged && <Button color="inherit" href="/Login">
+                <IconButton color="inherit" aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                    <MenuIcon/>
+                    <Menu
+                        id="simple-menu"
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+                    >
+                        {/* <Link underline='none' href='/usereinfo'><MenuItem onClick={handleClose}>Meu Perfil</MenuItem></Link> */}
+                        <Link underline='none' href='/regauction'><MenuItem onClick={handleClose}>Cadastrar Leilão</MenuItem></Link>
+                        <Link underline='none' href='/transactions'><MenuItem onClick={handleClose}>Transações</MenuItem></Link>
+                        {/* <Link underline='none'><MenuItem onClick={handleClose}>Logout</MenuItem></Link> */}
+                    </Menu>
+                </IconButton>
+                <Typography variant="h6" className={classes.title}>
+                    <Link href="/" className={classes.link} color='inherit'>
+                        Bate o Martelo!
+                    </Link>
+                </Typography>
+                <Button color="inherit" href="/Login">
                     Login
-            </Button>}
+            </Button>
             </Toolbar>
-        </AppBar>
+        </AppBar >
     );
 };
 

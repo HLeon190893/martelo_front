@@ -4,6 +4,7 @@ import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
 import useStyles from './ArrematarLeilao.styles'
 import Axios from "axios";
+import {Redirect} from 'react-router-dom';
 
 function getModalStyle() {
     const top = 50;
@@ -15,7 +16,7 @@ function getModalStyle() {
     };
 }
 
-export default function SimpleModal() {
+const SimpleModal = (props) => {
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
     const [open, setOpen] = React.useState(false);
@@ -28,16 +29,15 @@ export default function SimpleModal() {
         setOpen(false);
     };
 
-    const arrematarLeilao = e => {
-        Axios.put('http://localhost:3001/auction/arremate/5dec53efccda890174449c72')
-        .then(response => {
-            console.log('Arrematado com successo!');
-        })
-        .then(error => {
-            console.log('Erro no Arremate');
-        })
-    }
+    const auctionId = props.auctionId;
+    const auctionName = props.auctionName;
+    const vlClose = props.value;
 
+    const arrematarLeilao = async (e) => {
+        const a = await Axios.put(`http://localhost:3001/auction/arremate/${auctionId}`)
+        const b = await Axios.post('http://localhost:3001/transaction', { auctionId, auctionName, vlClose })
+        window.location.href = `/auction/${auctionId}`;
+    }
     return (
         <div>
             <Button variant="contained" color="primary" onClick={handleOpen} className={classes.submit}>
@@ -50,19 +50,23 @@ export default function SimpleModal() {
                 open={open}
                 onClose={handleClose}
             >
+                {/* <form> */}
                 <div style={modalStyle} className={classes.paper}>
                     <h2>Tem certeza que deseja arrematar o leilão? Clique em confirmar.</h2>
                     <div className={classes.modalButtons}>
-                        <Button variant="contained" color="primary" onClick={handleClose} className={classes.submit2}>
+                        <Button variant="contained" color="secondary" onClick={handleClose} className={classes.submit2}>
                             Cancelar
                     </Button>
-                        <Button variant="contained" color="primary" className={classes.submit2} onClick={arrematarLeilao}>
+                        <Button variant="contained" color="primary" className={classes.submit2} onClick={arrematarLeilao} type="submit">
                             Confirmar
                     </Button>
 
+
                     </div>
                 </div>
+                {/* </form> */}
             </Modal>
         </div>
     );
 }
+export default SimpleModal
